@@ -1,32 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>Ajax call</h1>
     <br><br>
-    <h2>Coffee Orders</h2>
+    <h2>Get Request</h2>
     <ul id="orders"></ul>
+    <br><br>
+    <h2>Post Request</h2>
+    <p>name: <input type="text" id="name"></p>
+    <p>drink: <input type="text" id="drink"></p>
+    <button id="add-order">Add!</button>
+    <h3 id="ajax-order"></h3>
 
 
     <script>
-            var $orders = $('#orders')
+        var $orders = $('#orders')
+        var $name = $('#name');
+        var $drink = $('#drink');
+
+        //  ***************** GET request ****************************
+
+        $.ajax({
+            type: "GET",
+            url: 'virtualdata',
+            dataType: "json",
+            success: function (responses) {
+                console.log('get success', responses);
+                $.each(responses, function (i, response) {
+                    $orders.append('<li>name: ' + response.name + ', drink:' + response.drink + '</li>')
+                })
+            },
+            error: function () {
+                alert('error in loading')
+            }
+        })
+
+        //  ***************** POST request ****************************
+
+        $('#add-order').on('click', function () {
+            var order = {
+                name: $name.val(),
+                drink: $drink.val()
+            };
             $.ajax({
-                type: "GET",
+                type: 'POST',
                 url: 'virtualdata',
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+                    'Access-Control-Allow-Origin': '*',
+                },
+                data: order,
                 dataType: "json",
-                success: function(responses) {
-                    console.log('success', responses);
-                       $.each(responses, function (i, response) {
-                        $orders.append('<li>name: ' + response.name + ', email:' + response.email + '</li>')
-                    })
+                success: function(newOrder) {
+                    console.log('post new order', newOrder);
+                    $orders.append('<li>name: ' + order.name + ', drink:' + order.drink + '</li>')
+                },
+                error: function () {
+                    alert('error in post')
                 }
+
             })
-    
+
+        })
+
+        //  ***************** POST request with render through content through controller ****************************
+        var $ajax_order = $('#ajax-order')
+        $.ajax({
+            type: "POST",
+            url: 'postlead',
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+                'Access-Control-Allow-Origin': '*',
+            },
+            data: {
+                name: "abc",
+            },
+            dataType: "json",
+            success: function (responses) {
+                if (responses.success) {
+                    console.log('post order', responses);
+                    $ajax_order.append('<li>name: ' + responses.name + '</li>')
+                }
+            }
+        })
+
     </script>
 </body>
+
 </html>

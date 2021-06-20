@@ -2,16 +2,19 @@
     {
         "id":1,
         "name":"Prashant",
-        "email":"prashant@gl.in"
+        "email":"prashant@gl.in",
+        "drink":"Cold Drink"
     },
     {
         "id":2,
         "name":"Nikita",
-        "email":"nikita@gl.in"
+        "email":"nikita@gl.in",
+        "drink": "Juice"
     },
     {
         "id":3,
         "name":"Aman",
-        "email":"aman@gl.in"
+        "email":"aman@gl.in",
+        "drink": "Milk shake"
     }
 ]
