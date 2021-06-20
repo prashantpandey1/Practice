@@ -14,17 +14,19 @@
 
 
     <script>
-        var $orders = $('#orders')
-        $.ajax({
-            type: "GET",
-            url: 'virtualdata',
-            success: function(data){
-                // console.log('success', data);
-                   $.each(orders, function (i, order) {
-                    $.orders.append('<li>name: ' + data.name + ', email:' + data.email + '</li>')
-                })
-            }
-        })
+            var $orders = $('#orders')
+            $.ajax({
+                type: "GET",
+                url: 'virtualdata',
+                dataType: "json",
+                success: function(responses) {
+                    console.log('success', responses);
+                       $.each(responses, function (i, response) {
+                        $orders.append('<li>name: ' + response.name + ', email:' + response.email + '</li>')
+                    })
+                }
+            })
+    
     </script>
 </body>
 </html>
