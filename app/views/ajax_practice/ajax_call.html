@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ajax call</h1>
+    <br><br>
+    <h2>Coffee Orders</h2>
+    <ul id="orders"></ul>
+
+
+    <script>
+        var $orders = $('#orders')
+        $.ajax({
+            type: "GET",
+            url: 'virtualdata',
+            success: function(data){
+                // console.log('success', data);
+                   $.each(orders, function (i, order) {
+                    $.orders.append('<li>name: ' + data.name + ', email:' + data.email + '</li>')
+                })
+            }
+        })
+    </script>
+</body>
+</html>

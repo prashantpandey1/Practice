@@ -1,0 +1,2 @@
+module AjaxPracticeHelper
+end
